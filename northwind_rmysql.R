@@ -3,14 +3,17 @@ library(RMySQL)
 
 # Connect to database
 northwind = dbConnect(MySQL(), user = "root", password = "password",
-                      host = "localhost", dbname = "Northwind")
+                      host = "localhost")
 dbDisconnect(northwind)
 
-# List tables
-dbListTables(northwind)
+# Show databases
+dbGetQuery(northwind, "SHOW DATABASES;")
 
-# List fields in Customers table
-dbListFields(northwind, "Customers")
+# Set default database
+dbSendStatement(northwind, "USE Northwind;")
+
+# List tables
+dbGetQuery(northwind, "SHOW TABLES;")
 
 # Read Customers table into R
 customers = dbReadTable(northwind, "Customers")
